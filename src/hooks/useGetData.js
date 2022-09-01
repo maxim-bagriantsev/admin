@@ -30,16 +30,12 @@ const useGetData = (
     ftch = fetch
 ) => {
 
-    const getOptions = async (type, body, pagination) => {
+    const getOptions = async (type, body) => {
         const options = {
             headers: {
                 'Accept': 'application/json',
                 ...(await headers())
             },
-            meta: {
-                page: 2,
-                pageSize: 10
-            }
         };
         if (body) {
             options.body = JSON.stringify(_.omit(body, [idParamApi, idParamAdmin]));
@@ -111,8 +107,9 @@ const useGetData = (
 
 
     const mapKeys = obj => _.mapKeys(obj, (value, key) => {
-        if (key === idParamApi)
+        if (key === idParamApi) {
             return idParamAdmin;
+        }
         return key;
     });
 
@@ -129,9 +126,16 @@ const useGetData = (
         let total = null;
         if ([GET_LIST, GET_MANY_REFERENCE].indexOf(type) > -1) {
             const totalFilter = JSON.parse(JSON.stringify(filter));
-            if (id)
+            if (!id)
                 totalFilter[target || idParamApi] = id;
             total = await fetchTotal(resource, totalFilter);
+        }
+
+        if ([GET_ONE].indexOf(type) > -1) {
+
+            const totalFilter = JSON.parse(JSON.stringify(filter));
+            if (id)
+                totalFilter[target || idParamApi] = id;
         }
 
         const url = new URL(apiUrl);
@@ -182,8 +186,6 @@ const useGetData = (
         }
         url.pathname = path.filter(Boolean).join('/');
 
-        console.log(decodeURIComponent(url.pathname))
-
         let response = await ftch(decodeURIComponent(url.toString()), options); // Запрос на сервер
 
         try {
@@ -200,10 +202,9 @@ const useGetData = (
             throw new Error(response.error.message);
 
         let result = {};
-        if ([UPDATE_MANY, DELETE_MANY].indexOf(type) > -1)
+        if ([UPDATE_MANY, DELETE_MANY].indexOf(type) > -1) {
             result.data = ids;
-
-        else if ([DELETE].indexOf(type) > -1)
+        } else if ([DELETE].indexOf(type) > -1)
             result = item;
         else
             result = Array.isArray(response) ? response.map(mapKeys) : mapKeys(response);
@@ -212,7 +213,7 @@ const useGetData = (
             result.meta.total = total;
         }
 
-        return {...result, total: result.meta.total};
+        return {...result, total: result.meta.total };
     };
 
     return fn;

@@ -6,19 +6,20 @@ import {UserEdit, UsersList, UserCreate} from './components/Users/UsersList';
 import {SkillCreate, SkillEdit, SkillsList} from "./components/Skills/SkillsList";
 
 import useGetData from "./hooks/useGetData";
+import dataProvider from "./dataProvider";
 
 
 
 const App = () => {
 
-    const dataProvider = useGetData('http://localhost:3001/api')
+    // const dataProvider = useGetData('http://localhost:3001/api')
 
 
     return (
         <>
             <Admin
                 dataProvider={dataProvider}
-                // authProvider={authProvider}
+                authProvider={authProvider}
             >
                 <Resource name='users' list={UsersList} create={UserCreate} edit={UserEdit}/>
                 <Resource name='skills' list={SkillsList} create={SkillCreate} edit={SkillEdit}/>

@@ -1,29 +1,58 @@
 import React from 'react';
-import {List, Filter, Datagrid, TextField, SearchInput, SimpleForm, Create, Edit, TextInput} from 'react-admin';
+import {
+    List,
+    Filter,
+    Datagrid,
+    TextField,
+    SearchInput,
+    SimpleForm,
+    Create,
+    Edit,
+    TextInput,
+    ReferenceField,
+    ReferenceInput,
+    SelectInput
+} from 'react-admin';
 
 const CustomerFilter = (props) => (
     <Filter {...props}>
-        <SearchInput placeholder='Customer Email' source='email' resettable alwaysOn name='email'/>
+        <SearchInput placeholder='User id' source='id' resettable alwaysOn name='id'/>
     </Filter>
 );
 
-export const UsersList = (props) => (
-    <List {...props}
-          filters={<CustomerFilter/>}
-          title='Лист пользователей' >
-        <Datagrid rowClick='edit'>
-            <TextField disabled source='id'/>
-            <TextField source='name'/>
-            <TextField source='lastName'/>
-            <TextField source='email'/>
-            <TextField source='status'/>
-        </Datagrid>
-    </List>
+
+const PostFilter = (props) => (
+    <Filter {...props}>
+        <TextInput label='Search' source='q' alwaysOn />
+        <ReferenceInput label='User' source='id' reference='users' allowEmpty>
+            <SelectInput optionText='name' />
+        </ReferenceInput>
+    </Filter>
 );
+
+export const UsersList = (props) => {
+
+    return (
+        <List {...props}
+              // filters={<CustomerFilter/>}
+              filters={<PostFilter/>}
+              title='Лист пользователей'
+        >
+            <Datagrid rowClick={(id) => `${id}`}>
+                <TextField disabled source='id'/>
+                <TextField source='name'/>
+                <TextField source='lastName'/>
+                <TextField source='email'/>
+                <TextField source='status'/>
+            </Datagrid>
+
+        </List>
+    )
+};
 
 
 export const UserEdit = props => (
-    <Edit {...props}>
+    <Edit {...props} title='Редактировать пользователя'>
         <SimpleForm>
             <TextInput disabled source='id' name={'id'}/>
             <TextInput source='name' name={'name'}/>
@@ -37,10 +66,10 @@ export const UserEdit = props => (
 export const UserCreate = props => (
     <Create {...props}>
         <SimpleForm>
-            <TextField source='name' name={'name'}/>
-            <TextField source='lastName' name={'lastName'}/>
-            <TextField source='email' name={'email'}/>
-            <TextField source='status' name={'status'}/>
+            <TextInput source='name' name={'name'}/>
+            <TextInput source='lastName' name={'lastName'}/>
+            <TextInput source='email' name={'email'}/>
+            <TextInput source='status' name={'status'}/>
         </SimpleForm>
     </Create>
 );
