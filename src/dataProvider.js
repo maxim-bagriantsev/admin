@@ -10,10 +10,11 @@ export default {
         const {page, perPage} = params.pagination;
         const {field, order} = params.sort;
         const query = {
-            // sort: JSON.stringify([field, order]),
+            sort: JSON.stringify(field, order),
             filter: JSON.stringify(params.filter),
             page: JSON.stringify(page),
         };
+
         const url = decodeURIComponent(`${apiUrl}/${resource}?${stringify(query)}`);
         return httpClient(url).then(({headers, json}) => ({
             ...json,
@@ -79,10 +80,10 @@ export default {
         }).then(({json}) => ({data: json}));
     },
 
-    delete: (resource, params) =>
+    delete: (resource, params) => {
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
-        }).then(({json}) => ({data: json})),
+        }).then(({json}) => ({data: json}))},
 
     deleteMany: (resource, params) => {
         const query = {

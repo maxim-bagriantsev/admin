@@ -9,24 +9,14 @@ import {
     Create,
     Edit,
     TextInput,
-    ReferenceField,
-    ReferenceInput,
     SelectInput
 } from 'react-admin';
+import {MyDatagrid} from "../UI/MyDatagrid/MyDatagrid";
 
-const CustomerFilter = (props) => (
+
+const UserFilter = (props) => (
     <Filter {...props}>
-        <SearchInput placeholder='User id' source='id' resettable alwaysOn name='id'/>
-    </Filter>
-);
-
-
-const PostFilter = (props) => (
-    <Filter {...props}>
-        <TextInput label='Search' source='q' alwaysOn />
-        <ReferenceInput label='User' source='id' reference='users' allowEmpty>
-            <SelectInput optionText='name' />
-        </ReferenceInput>
+        <SearchInput placeholder='Customer Email' source='email' resettable alwaysOn/>
     </Filter>
 );
 
@@ -34,18 +24,25 @@ export const UsersList = (props) => {
 
     return (
         <List {...props}
-              // filters={<CustomerFilter/>}
-              filters={<PostFilter/>}
+              filters={<UserFilter/>}
               title='Лист пользователей'
+              sort={{field: 'id', order: 'ASC'}}
         >
-            <Datagrid rowClick={(id) => `${id}`}>
+            <MyDatagrid
+                rowClick={(id) => `${id}`}
+                sx={{
+                    backgroundColor: "Lavender",
+                    "& .RaDatagrid-headerCell": {
+                        backgroundColor: "MistyRose",
+                    },
+                }}
+            >
                 <TextField disabled source='id'/>
                 <TextField source='name'/>
                 <TextField source='lastName'/>
                 <TextField source='email'/>
                 <TextField source='status'/>
-            </Datagrid>
-
+            </MyDatagrid>
         </List>
     )
 };
@@ -58,7 +55,13 @@ export const UserEdit = props => (
             <TextInput source='name' name={'name'}/>
             <TextInput source='lastName' name={'lastName'}/>
             <TextInput source='email' name={'email'}/>
-            <TextInput source='status' name={'status'}/>
+            <SelectInput
+                source='status'
+                choices={[
+                    {id: 'active', name: 'active'},
+                    {id: 'pending', name: 'pending'},
+                ]}
+            />
         </SimpleForm>
     </Edit>
 );
@@ -69,7 +72,8 @@ export const UserCreate = props => (
             <TextInput source='name' name={'name'}/>
             <TextInput source='lastName' name={'lastName'}/>
             <TextInput source='email' name={'email'}/>
-            <TextInput source='status' name={'status'}/>
+            <TextInput source='password' name={'password'}/>
+            <TextInput source='confirm password ' name={'confirm password'}/>
         </SimpleForm>
     </Create>
 );
