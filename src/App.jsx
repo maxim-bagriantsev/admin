@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
-import {Admin, defaultTheme, Resource} from 'react-admin';
-import {authProvider,} from './Auth';
+import {Admin, defaultTheme, Resource, Login, CustomRoutes} from 'react-admin';
+import {authProvider,} from './pages/Auth';
 import {UserEdit, UsersList, UserCreate} from './components/Users/UsersList';
 import {SkillCreate, SkillEdit, SkillsList} from "./components/Skills/SkillsList";
 
@@ -15,6 +15,10 @@ import {
 } from "./components/Specializations/SpecializationsList";
 import {MaterialCreate, MaterialEdit, MaterialsList} from "./components/Materials/MaterialsList";
 import MyLayout from "./components/MyLayout/MyLayout";
+import {Route} from "react-router-dom";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import Error404 from "./pages/404";
 
 
 //боковая панель
@@ -26,6 +30,14 @@ const theme = {
     },
 };
 
+const MyLoginPage = () => (
+    <Login
+        // A random image that changes everyday
+        backgroundImage="https://source.unsplash.com/random/1600x900/daily"
+    />
+);
+
+
 const App = () => {
 
     return (
@@ -34,12 +46,18 @@ const App = () => {
                 dataProvider={dataProvider}
                 authProvider={authProvider}
                 layout={MyLayout}
+                loginPage={MyLoginPage}
                 // theme={theme}
             >
                 <Resource name='users' list={UsersList} create={UserCreate} edit={UserEdit} icon={UserIcon}/>
                 <Resource name='skills' list={SkillsList} create={SkillCreate} edit={SkillEdit}/>
                 <Resource name='specializations' list={SpecializationsList} create={SpecializationCreate} edit={SpecializationEdit}/>
                 <Resource name='materials' list={MaterialsList} create={MaterialCreate} edit={MaterialEdit}/>
+                <CustomRoutes>
+                    <Route path='/settings' element={<Settings/>}/>
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/404" element={<Error404 />} />
+                </CustomRoutes>
             </Admin>
         </>
 

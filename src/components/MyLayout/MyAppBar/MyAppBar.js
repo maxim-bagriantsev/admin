@@ -5,6 +5,7 @@ import {createTheme, Box, Typography} from '@mui/material';
 import SwitchLanguage from "../SwitchLanguage/SwitchLanguage";
 
 const darkTheme = createTheme({
+
     palette: {mode: 'dark'},
 });
 
