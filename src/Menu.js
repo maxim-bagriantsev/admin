@@ -6,6 +6,7 @@ import Groups2Icon from '@mui/icons-material/Groups2';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 const Menu = () => {
 
@@ -13,23 +14,27 @@ const Menu = () => {
 
     const items = [
         {
-            // primaryText: 'Users',
+            primaryText: t('dashboard'),
+            icon: <HomeOutlinedIcon/>,
+            path: '/',
+        },
+        {
             primaryText: t('users'),
             icon: <Groups2Icon/>,
             path: 'users',
         },
         {
-            primaryText: 'Skills',
+            primaryText: t('skills'),
             icon: <BookmarksIcon/>,
             path: 'skills',
         },
         {
-            primaryText: 'Specializations',
+            primaryText: t('specializations'),
             icon: <LaptopChromebookIcon/>,
             path: 'specializations',
         },
         {
-            primaryText: 'Materials',
+            primaryText: t('materials'),
             icon: <MenuBookIcon/>,
             path: '/materials',
         },

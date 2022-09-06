@@ -5,9 +5,11 @@ import {MySidebar} from "./MySidebar/MySidebar";
 import Error404 from "../../pages/404";
 import Menu from "../../Menu";
 
+type MyLayout = {
 
+}
 
-const MyLayout = (props: any) => {
+const MyLayout = (props: MyLayout) => {
 
     return (
         <Layout

@@ -20,12 +20,8 @@ import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
 import Error404 from "./pages/404";
 
-// import polyglotI18nProvider from 'ra-i18n-polyglot';
-// import englishMessages from 'ra-language-english';
-// import RussianMessages from 'ra-language-russian';
-
 import './asserts/locales/i18n'
-
+import {Dashboard} from "./components/Dashboard/Dashboard";
 
 //боковая панель
 const theme = {
@@ -44,11 +40,6 @@ const MyLoginPage = () => (
 );
 
 
-//
-// const i18nProvider = polyglotI18nProvider(
-//     locale => (locale === 'ru' ? RussianMessages : englishMessages),
-// );
-
 const App = () => {
 
     return (
@@ -58,17 +49,19 @@ const App = () => {
                 authProvider={authProvider}
                 layout={MyLayout}
                 loginPage={MyLoginPage}
-                // i18nProvider={i18nProvider}
-                // theme={theme}
+                dashboard={Dashboard}
+                theme={theme}
             >
-                <Resource name='users' list={UsersList} create={UserCreate} edit={UserEdit} icon={UserIcon} intent={'registration'}/>
+                <Resource name='users' list={UsersList} create={UserCreate} edit={UserEdit} icon={UserIcon}
+                          intent={'registration'}/>
                 <Resource name='skills' list={SkillsList} create={SkillCreate} edit={SkillEdit}/>
-                <Resource name='specializations' list={SpecializationsList} create={SpecializationCreate} edit={SpecializationEdit}/>
+                <Resource name='specializations' list={SpecializationsList} create={SpecializationCreate}
+                          edit={SpecializationEdit}/>
                 <Resource name='materials' list={MaterialsList} create={MaterialCreate} edit={MaterialEdit}/>
                 <CustomRoutes>
                     <Route path='/settings' element={<Settings/>}/>
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/404" element={<Error404 />} />
+                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/404" element={<Error404/>}/>
                 </CustomRoutes>
             </Admin>
         </>
