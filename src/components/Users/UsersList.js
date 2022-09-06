@@ -9,7 +9,8 @@ import {
     Create,
     Edit,
     TextInput,
-    SelectInput
+    SelectInput,
+    ReferenceField
 } from 'react-admin';
 import {MyDatagrid} from "../UI/MyDatagrid/MyDatagrid";
 
@@ -27,6 +28,7 @@ export const UsersList = (props) => {
               filters={<UserFilter/>}
               title='Лист пользователей'
               sort={{field: 'id', order: 'ASC'}}
+
         >
             <MyDatagrid
                 rowClick={(id) => `${id}`}

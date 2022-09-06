@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 const SwitchLanguage = forwardRef((props, ref) => {
     const [locale, setLocale] = useLocaleState();
     // We are not using MenuItemLink so we retrieve the onClose function from the UserContext
-    // const { onClose } = useUserMenu();
+    const { onClose } = useUserMenu();
 
     return (
         <MenuItem
@@ -21,8 +21,8 @@ const SwitchLanguage = forwardRef((props, ref) => {
             {...props}
             sx={{ color: 'text.secondary' }}
             onClick={event => {
-                setLocale(locale === 'en' ? 'fr' : 'en');
-                // onClose(); // Close the menu
+                setLocale(locale === 'en' ? 'en' : 'ru');
+                onClose(); // Close the menu
             }}
         >
             <ListItemIcon sx={{ minWidth: 5 }}>
